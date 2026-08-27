@@ -4,7 +4,7 @@
  */
 
 import { type ObservationType, isGenerationLike } from "@langfuse/shared";
-import { Badge } from "@/src/components/ui/badge";
+import { Badge } from "@/src/components/design-system/Badge/Badge";
 import {
   BreakdownTooltip,
   type PriceSource,
@@ -30,10 +30,7 @@ export function CostBadge({
       isCost={true}
       priceSource={priceSource}
     >
-      <Badge variant="tertiary" className="flex items-center gap-1">
-        <span>{usdFormatter(totalCost)}</span>
-        <InfoIcon className="h-3 w-3" />
-      </Badge>
+      <Badge text={usdFormatter(totalCost)} trailingIcon={InfoIcon} />
     </BreakdownTooltip>
   );
 }
@@ -60,17 +57,11 @@ export function UsageBadge({
     totalUsage,
     true,
   );
-  const hasText = tokenText.length > 0;
+  if (!tokenText) return null;
 
   return (
     <BreakdownTooltip details={usageDetails} isCost={false}>
-      <Badge
-        variant="tertiary"
-        className={`flex items-center gap-1 ${!hasText ? "h-6 pl-2" : ""}`}
-      >
-        {hasText && <span>{tokenText}</span>}
-        <InfoIcon className="h-3 w-3" />
-      </Badge>
+      <Badge text={tokenText} trailingIcon={InfoIcon} />
     </BreakdownTooltip>
   );
 }
